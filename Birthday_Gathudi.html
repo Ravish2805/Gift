@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday My Love 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; cursor: none !important; }
+
+:root {
+  --pink: #ff6faa;
+  --deep-pink: #ff2d78;
+  --purple: #c084fc;
+  --gold: #fbbf24;
+  --light: #fff0f7;
+}
+
+html, body {
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
+  background: #0d001a;
+  overflow-x: hidden;
+}
+
+/* Custom cursor */
+.cursor {
+  position: fixed;
+  width: 20px; height: 20px;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  transition: transform 0.1s;
+}
+
+/* Stars bg */
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: white;
+  animation: twinkle var(--d) ease-in-out infinite;
+}
+@keyframes twinkle {
+  0%,100%{ opacity:0.2; transform:scale(1); }
+  50%{ opacity:1; transform:scale(1.4); }
+}
+
+/* Floating particles */
+.particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 1;
+  font-size: 20px;
+  animation: floatUp var(--dur) ease-in forwards;
+  opacity: 0;
+}
+@keyframes floatUp {
+  0%   { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* Page sections */
+.page {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 2;
+}
+.page.active { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+/* ===== PAGE 1 — INTRO ===== */
+#page1 {
+  background: radial-gradient(ellipse at 50% 30%, #3d0060 0%, #0d001a 70%);
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.glow-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(48px, 12vw, 90px);
+  background: linear-gradient(135deg, #ff6faa, #fbbf24, #c084fc, #ff6faa);
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradShift 3s ease infinite, fadeSlideUp 1s ease forwards;
+  opacity: 0;
+  filter: drop-shadow(0 0 30px rgba(255,111,170,0.6));
+}
+@keyframes gradShift {
+  0%,100%{ background-position:0% 50%; }
+  50%{ background-position:100% 50%; }
+}
+@keyframes fadeSlideUp {
+  from{ opacity:0; transform:translateY(40px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.subtitle {
+  font-size: clamp(16px, 4vw, 22px);
+  color: #ffb3d9;
+  margin-top: 12px;
+  animation: fadeSlideUp 1s ease 0.3s forwards;
+  opacity: 0;
+  font-weight: 600;
+}
+
+.cake-wrap {
+  margin: 30px auto;
+  animation: fadeSlideUp 1s ease 0.5s forwards, bobble 2.5s ease-in-out 1.5s infinite;
+  opacity: 0;
+  font-size: 100px;
+  filter: drop-shadow(0 0 20px rgba(251,191,36,0.6));
+}
+@keyframes bobble { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+
+.name-badge {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(28px, 8vw, 52px);
+  color: #fbbf24;
+  text-shadow: 0 0 30px rgba(251,191,36,0.8), 0 0 60px rgba(251,191,36,0.4);
+  animation: fadeSlideUp 1s ease 0.7s forwards, pulse-glow 2s ease 1.7s infinite;
+  opacity: 0;
+  margin-bottom: 6px;
+}
+@keyframes pulse-glow {
+  0%,100%{ text-shadow:0 0 30px rgba(251,191,36,0.8); }
+  50%{ text-shadow:0 0 50px rgba(251,191,36,1), 0 0 80px rgba(255,111,170,0.6); }
+}
+
+.enter-btn {
+  margin-top: 36px;
+  padding: 16px 48px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #ff6faa, #c084fc);
+  color: #000;
+  font-size: 18px;
+  font-weight: 800;
+  border: none;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 0 30px rgba(255,111,170,0.5), 0 0 60px rgba(192,132,252,0.3);
+  animation: fadeSlideUp 1s ease 1s forwards, btnPulse 2s ease 2s infinite;
+  opacity: 0;
+  transition: transform 0.2s;
+  letter-spacing: 1px;
+}
+.enter-btn:hover { transform: scale(1.08); }
+.enter-btn:active { transform: scale(0.96); }
+@keyframes btnPulse {
+  0%,100%{ box-shadow:0 0 30px rgba(255,111,170,0.5); }
+  50%{ box-shadow:0 0 50px rgba(255,111,170,0.9), 0 0 80px rgba(192,132,252,0.5); }
+}
+
+/* ===== PAGE 2 — MESSAGES ===== */
+#page2 {
+  background: radial-gradient(ellipse at 30% 50%, #1a0030 0%, #0d001a 60%);
+  padding: 40px 20px;
+  gap: 0;
+}
+
+.msg-container {
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+}
+
+.msg-card {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,111,170,0.25);
+  border-radius: 24px;
+  padding: 32px 28px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+.msg-card::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(135deg, rgba(255,111,170,0.08), rgba(192,132,252,0.08));
+  border-radius: 24px;
+}
+
+.msg-num {
+  font-size: 13px;
+  color: #ff6faa;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  opacity: 0.8;
+}
+
+.msg-emoji {
+  font-size: 64px;
+  display: block;
+  margin-bottom: 16px;
+  animation: msgBobble 2s ease-in-out infinite;
+}
+@keyframes msgBobble { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1) rotate(5deg)} }
+
+.msg-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(22px, 5vw, 32px);
+  color: #fff;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.msg-sub {
+  font-size: 14px;
+  color: #ffb3d9;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.msg-nav {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 28px;
+  align-items: center;
+}
+
+.nav-btn {
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  transition: transform 0.15s, box-shadow 0.15s;
+  color: #000;
+}
+.nav-next {
+  background: linear-gradient(135deg, #ff6faa, #ff2d78);
+  box-shadow: 0 4px 20px rgba(255,111,170,0.4);
+}
+.nav-next:hover { transform: scale(1.06); }
+.nav-prev {
+  background: rgba(255,255,255,0.12);
+  color: #ffb3d9;
+  border: 1px solid rgba(255,111,170,0.3);
+}
+.nav-prev:hover { transform: scale(1.06); background: rgba(255,255,255,0.18); }
+
+.msg-dots {
+  display: flex; gap: 8px; justify-content: center; margin-top: 20px;
+}
+.mdot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(255,111,170,0.25);
+  transition: all 0.3s;
+}
+.mdot.active { background: #ff6faa; transform: scale(1.4); }
+
+/* ===== PAGE 3 — FINAL ===== */
+#page3 {
+  background: radial-gradient(ellipse at 50% 50%, #2d0050 0%, #0d001a 70%);
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.final-card {
+  max-width: 480px;
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(251,191,36,0.3);
+  border-radius: 28px;
+  padding: 40px 28px;
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: visible;
+}
+.final-card::before {
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(135deg, rgba(251,191,36,0.06), rgba(255,111,170,0.06));
+}
+
+@keyframes bigBobble { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-14px) scale(1.08)} }
+
+/* ---- TOP RECTANGULAR IMAGE (replaces emoji) ---- */
+/* To change size: edit --top-img-w and --top-img-h below */
+.top-img-wrap {
+  --top-img-w: 200px;   /* ← CHANGE WIDTH HERE */
+  --top-img-h: 260px;   /* ← CHANGE HEIGHT HERE */
+  width: var(--top-img-w);
+  height: var(--top-img-h);
+  margin: 0 auto 18px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 3px solid rgba(255,111,170,0.5);
+  box-shadow: 0 0 30px rgba(255,111,170,0.4), 0 0 60px rgba(192,132,252,0.2);
+  animation: bigBobble 2.5s ease-in-out infinite;
+}
+.top-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+.top-img-placeholder {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, rgba(255,111,170,0.15), rgba(192,132,252,0.15));
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px; color: rgba(255,179,217,0.6);
+  font-size: 13px; font-weight: 700; letter-spacing: 1px;
+}
+
+/* ---- CIRCLE IMAGE (below "You are my whole world") ---- */
+/* To change size: edit --circle-size below */
+.circle-img-wrap {
+  --circle-size: 160px;   /* ← CHANGE CIRCLE SIZE HERE */
+  --img-size: 140px;      /* ← CHANGE IMAGE SIZE HERE (should be smaller than circle) */
+  --border-gap: 6px;      /* ← BORDER GAP between image and circle edge */
+  width: var(--circle-size);
+  height: var(--circle-size);
+  border-radius: 50%;
+  border: 3px solid #ff6faa;
+  box-shadow: 0 0 0 var(--border-gap) rgba(255,111,170,0.25),
+              0 0 25px rgba(255,111,170,0.4),
+              0 0 50px rgba(192,132,252,0.2);
+  display: flex; align-items: center; justify-content: center;
+  margin: 20px auto 20px;
+  position: relative;
+  animation: bigBobble 3s ease-in-out infinite;
+}
+.circle-img-wrap img {
+  width: var(--img-size);
+  height: var(--img-size);
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: 2px solid rgba(255,255,255,0.15);
+}
+.circle-img-placeholder {
+  width: var(--img-size);
+  height: var(--img-size);
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(255,111,170,0.15), rgba(192,132,252,0.15));
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 6px; color: rgba(255,179,217,0.6);
+  font-size: 12px; font-weight: 700; letter-spacing: 1px; text-align: center;
+}
+
+.earth-icon {
+  display: inline-block;
+  font-style: normal;
+  -webkit-text-fill-color: initial;
+  background: none;
+  font-size: clamp(28px, 6vw, 44px);
+  vertical-align: middle;
+  filter: drop-shadow(0 0 8px rgba(100,200,255,0.6));
+  animation: earthSpin 6s linear infinite;
+  user-select: none;
+}
+@keyframes earthSpin {
+  0%,100% { transform: scale(1) rotate(-5deg); }
+  50%      { transform: scale(1.15) rotate(5deg); }
+}
+
+.final-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(32px, 8vw, 52px);
+  background: linear-gradient(135deg, #fbbf24, #ff6faa, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.final-msg {
+  font-size: 15px;
+  color: #ffb3d9;
+  line-height: 1.8;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.balloon-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+.balloon { animation: balloonFloat var(--bd) ease-in-out infinite; }
+@keyframes balloonFloat { 0%,100%{transform:translateY(0) rotate(-5deg)} 50%{transform:translateY(-16px) rotate(5deg)} }
+
+.restart-btn {
+  padding: 14px 40px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #fbbf24, #ff6faa);
+  color: #000;
+  font-size: 16px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  box-shadow: 0 4px 24px rgba(251,191,36,0.4);
+  transition: transform 0.15s;
+  letter-spacing: 0.5px;
+}
+.restart-btn:hover { transform: scale(1.07); }
+
+/* Confetti cannon */
+.confetti-piece {
+  position: fixed;
+  width: 10px; height: 10px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall var(--cd) ease-in forwards;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(-20px) rotate(0deg) translateX(0); opacity:1; }
+  100% { transform: translateY(110vh) rotate(720deg) translateX(var(--cx)); opacity:0; }
+}
+
+/* Page transitions */
+.page { animation: none; }
+.page.entering { animation: pageEnter 0.6s ease forwards; }
+@keyframes pageEnter {
+  from { opacity:0; transform: translateY(30px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+/* Ribbon decoration */
+.ribbon {
+  position: absolute;
+  font-size: 22px;
+  opacity: 0.5;
+  animation: ribbonSpin var(--rs) linear infinite;
+  pointer-events: none;
+}
+@keyframes ribbonSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor">💖</div>
+<div id="starfield"></div>
+
+<!-- PAGE 1: INTRO -->
+<div class="page active" id="page1">
+  <div class="ribbon" style="top:10%;left:5%;--rs:8s">🎀</div>
+  <div class="ribbon" style="top:20%;right:8%;--rs:6s">✨</div>
+  <div class="ribbon" style="bottom:15%;left:10%;--rs:10s">🌸</div>
+  <div class="ribbon" style="bottom:20%;right:5%;--rs:7s">💫</div>
+
+  <div class="cake-wrap">🎂</div>
+  <h1 class="glow-title">Happy Birthday!</h1>
+  <p class="subtitle">A special day for a very special person 💕</p>
+  <div class="name-badge">Gathudi 🌹</div>
+  <button class="enter-btn" onclick="goToPage2()">Open Your Gift 🎁</button>
+</div>
+
+<!-- PAGE 2: MESSAGES -->
+<div class="page" id="page2">
+  <div class="msg-container">
+    <div class="msg-card" id="msgCard">
+      <div style="position:relative;z-index:1">
+        <div class="msg-num" id="msgNum">01 / 05</div>
+        <span class="msg-emoji" id="msgEmoji">🌸</span>
+        <div class="msg-text" id="msgText">Loading...</div>
+        <div class="msg-sub" id="msgSub"></div>
+      </div>
+    </div>
+    <div class="msg-dots" id="msgDots"></div>
+    <div class="msg-nav">
+      <button class="nav-btn nav-prev" id="prevBtn" onclick="prevMsg()" style="display:none">← Back</button>
+      <button class="nav-btn nav-next" id="nextBtn" onclick="nextMsg()">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 3: FINAL -->
+<div class="page" id="page3">
+  <div class="final-card">
+    <div style="position:relative;z-index:1">
+
+      <!-- ============================================
+           TOP IMAGE — rectangular portrait style
+           Put your image in: images/top_photo.jpg
+           (supports .jpg .jpeg .png .gif .webp)
+           To resize: edit CSS variables
+             --top-img-w  = width
+             --top-img-h  = height
+           ============================================ -->
+      <div class="top-img-wrap">
+        <img src="Images/Square.jpg"
+             alt="Top photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="top-img-placeholder" style="display:none">
+          📷<span>Add top_photo.jpg<br>inside images/ folder</span>
+        </div>
+      </div>
+
+      <div class="balloon-row">
+        <span class="balloon" style="--bd:2s">🎈</span>
+        <span class="balloon" style="--bd:2.4s">🎈</span>
+        <span class="balloon" style="--bd:1.8s">🎈</span>
+        <span class="balloon" style="--bd:2.2s">🎈</span>
+        <span class="balloon" style="--bd:2.6s">🎈</span>
+      </div>
+
+      <div class="final-title">You are my<br>whole world <span class="earth-icon">🌍</span></div>
+
+      <!-- ============================================
+           CIRCLE IMAGE — sits below the title
+           Put your image in: images/circle_photo.jpg
+           To resize: edit CSS variables in .circle-img-wrap
+             --circle-size = outer circle diameter
+             --img-size    = image size (keep smaller than circle)
+             --border-gap  = gap between image edge and circle
+           ============================================ -->
+      <div class="circle-img-wrap">
+        <img src="Images/Circle.jpg"
+             alt="Circle photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="circle-img-placeholder" style="display:none">
+          📷<span>Add circle_photo.jpg<br>inside images/ folder</span>
+        </div>
+      </div>
+
+      <div class="final-msg">
+        Every moment with you is a gift,<br>
+        every smile of yours is my favourite thing,<br>
+        every day spent with you is a blessing. 💕<br><br>
+        <strong style="color:#fbbf24">Wishing you the most magical birthday ever!</strong><br>
+        Lots of love, always &amp; forever 🌹
+      </div>
+      <button class="restart-btn" onclick="restart()">🔄 Replay from Start</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ---- CURSOR ----
+const cursor = document.getElementById('cursor');
+const cursorEmojis = ['💖','🌸','✨','💕','🌹','💝','⭐','🎀'];
+let cursorIdx = 0;
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.addEventListener('click', () => {
+  cursorIdx = (cursorIdx + 1) % cursorEmojis.length;
+  cursor.textContent = cursorEmojis[cursorIdx];
+  spawnClickBurst(event.clientX, event.clientY);
+});
+
+function spawnClickBurst(x, y) {
+  ['💖','✨','🌸'].forEach((e, i) => {
+    const el = document.createElement('div');
+    el.style.cssText = `position:fixed;left:${x}px;top:${y}px;font-size:18px;pointer-events:none;z-index:99998;animation:burstFly 0.7s ease forwards;transform-origin:center;--bx:${(Math.random()-0.5)*80}px;--by:${-40-Math.random()*40}px;animation-delay:${i*0.05}s`;
+    el.textContent = e;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 800);
+  });
+}
+
+// Add burst keyframe
+const s = document.createElement('style');
+s.textContent = `@keyframes burstFly{0%{opacity:1;transform:translate(0,0) scale(0.5)}100%{opacity:0;transform:translate(var(--bx),var(--by)) scale(1.2)}}`;
+document.head.appendChild(s);
+
+// ---- STARS ----
+const sf = document.getElementById('starfield');
+for (let i = 0; i < 120; i++) {
+  const star = document.createElement('div');
+  const size = Math.random() * 3 + 1;
+  star.className = 'star';
+  star.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--d:${2+Math.random()*4}s;animation-delay:${Math.random()*4}s`;
+  sf.appendChild(star);
+}
+
+// ---- FLOATING PARTICLES ----
+const particleEmojis = ['🌸','💕','✨','💖','🌹','⭐','💫','🎀','🌺'];
+function spawnParticle() {
+  const el = document.createElement('div');
+  el.className = 'particle';
+  el.textContent = particleEmojis[Math.floor(Math.random() * particleEmojis.length)];
+  el.style.cssText = `left:${Math.random()*100}%;--dur:${5+Math.random()*6}s;animation-delay:0s;font-size:${14+Math.random()*14}px`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 12000);
+}
+setInterval(spawnParticle, 1200);
+
+// ---- MESSAGES ----
+const messages = [
+  {
+    emoji: '🌹',
+    text: 'Happy Birthday, Gathudi!',
+    sub: 'Today the whole universe is celebrating because you were born. You make the world a more beautiful place just by being in it. 🌍'
+  },
+  {
+    emoji: '💖',
+    text: 'You are my sunshine ☀️',
+    sub: 'On your darkest days, I want to be the light that makes you smile. You deserve all the happiness in the world and so much more. 💕'
+  },
+  {
+    emoji: '🌸',
+    text: 'My favourite person',
+    sub: 'Your laugh is my favourite sound. Your smile is my favourite sight. Your love is my favourite feeling. Thank you for being you. 🥺'
+  },
+  {
+    emoji: '🎂',
+    text: 'Make a wish! ✨',
+    sub: 'Close your eyes, blow the candles and wish for something magical — but know that just having you makes every day magical for me. 🕯️'
+  },
+  {
+    emoji: '💝',
+    text: 'Forever & Always',
+    sub: 'No matter how many birthdays come and go, my love for you only grows stronger. Here\'s to you — my everything. 🌹'
+  }
+];
+
+let msgIdx = 0;
+
+function renderMsg() {
+  const m = messages[msgIdx];
+  document.getElementById('msgNum').textContent = `0${msgIdx+1} / 0${messages.length}`;
+  document.getElementById('msgEmoji').textContent = m.emoji;
+  document.getElementById('msgText').textContent = m.text;
+  document.getElementById('msgSub').textContent = m.sub;
+
+  // dots
+  const dots = document.getElementById('msgDots'); dots.innerHTML = '';
+  messages.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'mdot' + (i === msgIdx ? ' active' : '');
+    dots.appendChild(d);
+  });
+
+  document.getElementById('prevBtn').style.display = msgIdx === 0 ? 'none' : '';
+  document.getElementById('nextBtn').textContent = msgIdx === messages.length - 1 ? 'See the finale 🎉' : 'Next →';
+
+  // card entrance animation
+  const card = document.getElementById('msgCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = 'pageEnter 0.5s ease';
+}
+
+function nextMsg() {
+  if (msgIdx < messages.length - 1) { msgIdx++; renderMsg(); }
+  else goToPage3();
+}
+function prevMsg() { if (msgIdx > 0) { msgIdx--; renderMsg(); } }
+
+// ---- CONFETTI ----
+function fireConfetti() {
+  const colors = ['#ff6faa','#fbbf24','#c084fc','#80deea','#a5d6a7','#ff4d8a','#fff176'];
+  for (let i = 0; i < 80; i++) {
+    const el = document.createElement('div');
+    el.className = 'confetti-piece';
+    const size = 8 + Math.random() * 8;
+    el.style.cssText = `
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      width:${size}px; height:${size}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      --cd:${1.5+Math.random()*1.5}s;
+      --cx:${(Math.random()-0.5)*200}px;
+      animation-delay:${Math.random()*0.5}s;
+    `;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 3500);
+  }
+}
+
+// ---- PAGE NAVIGATION ----
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active','entering'));
+  const pg = document.getElementById(id);
+  pg.classList.add('active','entering');
+}
+
+function goToPage2() {
+  showPage('page2');
+  msgIdx = 0;
+  renderMsg();
+}
+
+function goToPage3() {
+  showPage('page3');
+  fireConfetti();
+  setTimeout(fireConfetti, 600);
+  setTimeout(fireConfetti, 1200);
+}
+
+function restart() {
+  showPage('page1');
+}
+</script>
+</body>
+</html>

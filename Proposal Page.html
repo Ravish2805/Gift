@@ -1,0 +1,250 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+#app {
+  min-height: 520px;
+  background: linear-gradient(135deg, #ffe4f0 0%, #ffd6ec 40%, #ead5ff 100%);
+  display: flex; align-items: center; justify-content: center;
+  padding: 30px 20px; position: relative; overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+#app::before {
+  content:''; position:absolute; width:320px; height:320px;
+  background:rgba(255,120,180,0.13); border-radius:50%; top:-100px; left:-100px;
+}
+#app::after {
+  content:''; position:absolute; width:260px; height:260px;
+  background:rgba(180,140,255,0.13); border-radius:50%; bottom:-80px; right:-80px;
+}
+
+.card {
+  background: rgba(255,255,255,0.93);
+  border-radius: 28px; padding: 30px 28px 28px;
+  max-width: 360px; width: 100%; text-align: center;
+  box-shadow: 0 8px 40px rgba(255,100,160,0.18);
+  position: relative; z-index: 2;
+  border: 1.5px solid rgba(255,180,210,0.35);
+}
+
+.progress-dots { display:flex; gap:8px; justify-content:center; margin-bottom:18px; }
+.dot { width:9px; height:9px; border-radius:50%; background:#f0c0d0; transition:all 0.3s; }
+.dot.active { background:#ff6faa; transform:scale(1.35); }
+.dot.done { background:#d04070; }
+
+.char-area {
+  width:160px; height:160px; margin:0 auto 14px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+.meme-face {
+  width:150px; height:150px; border-radius:20px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:90px; line-height:1;
+  border: 2px solid rgba(200,180,220,0.4);
+}
+.meme-face.normal   { animation:bobble 2.2s ease-in-out infinite; background:linear-gradient(145deg,#e8fdf4,#d4f0ff); }
+.meme-face.angry    { animation:shake 0.4s ease-in-out infinite;  background:linear-gradient(145deg,#fff0e8,#ffe0d0); }
+.meme-face.sad      { animation:sway 1.6s ease-in-out infinite;   background:linear-gradient(145deg,#e8eeff,#dde4ff); }
+.meme-face.pleading { animation:wiggle 0.85s ease-in-out infinite; background:linear-gradient(145deg,#ffeef8,#ffe0f0); }
+.meme-face.happy    { animation:jump 0.6s ease-in-out infinite;   background:linear-gradient(145deg,#fffde0,#ffe8f0); }
+
+@keyframes bobble { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes shake  { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px) rotate(-4deg)} 75%{transform:translateX(6px) rotate(4deg)} }
+@keyframes sway   { 0%,100%{transform:rotate(-7deg)} 50%{transform:rotate(7deg)} }
+@keyframes wiggle { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1) rotate(4deg)} }
+@keyframes jump   { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-14px) scale(1.07)} }
+
+.main-text {
+  font-size:20px; font-weight:800; color:#c0396a;
+  margin-bottom:6px; line-height:1.35; min-height:54px;
+}
+.sub-text {
+  font-size:13px; color:#b07090; font-weight:600;
+  margin-bottom:22px; min-height:28px;
+}
+
+.btns {
+  display:flex; gap:14px; justify-content:center;
+  align-items:center; min-height:52px;
+}
+
+/* YES — always black text, no matter what */
+.btn-yes {
+  padding:12px 34px; border-radius:50px;
+  background: linear-gradient(135deg, #ff6faa, #ff4080);
+  color: #000000 !important;
+  border: none;
+  box-shadow: 0 4px 18px rgba(255,70,130,0.35);
+  font-size:16px; font-weight:800; cursor:pointer;
+  font-family:inherit; letter-spacing:0.4px;
+  transition: transform 0.15s;
+}
+.btn-yes:hover { color: #000000 !important; transform: scale(1.07); }
+.btn-yes:active { transform:scale(0.97); }
+
+/* NO — always black text, no matter what */
+.btn-no {
+  padding:12px 34px; border-radius:50px;
+  background: linear-gradient(135deg, #e0e0e0, #c8c8c8);
+  color: #000000 !important;
+  border: none;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  font-size:16px; font-weight:800; cursor:pointer;
+  font-family:inherit; letter-spacing:0.4px;
+  min-width:80px;
+  transition: transform 0.15s;
+}
+.btn-no:hover { color: #000000 !important; }
+
+/* Floating NO — always black text, solid visible bg */
+.btn-no-floating {
+  position: fixed !important;
+  z-index: 9999 !important;
+  padding: 12px 28px; border-radius: 50px;
+  background: linear-gradient(135deg, #e0e0e0, #c8c8c8) !important;
+  color: #000000 !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.28) !important;
+  font-size:16px; font-weight:800; cursor:pointer;
+  font-family:inherit; min-width:80px;
+}
+.btn-no-floating:hover { color: #000000 !important; }
+
+/* Yes ending */
+.yes-title { font-size:24px; font-weight:800; color:#c0396a; margin:10px 0 8px; }
+.yes-sub   { font-size:14px; color:#b07090; font-weight:600; line-height:1.6; }
+.hearts-row { font-size:22px; letter-spacing:5px; margin-top:14px; animation:pulse 1s ease-in-out infinite; display:block; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.18)} }
+
+.fh-layer { position:absolute; inset:0; pointer-events:none; overflow:hidden; border-radius:28px; z-index:0; }
+.fh { position:absolute; font-size:16px; opacity:0.14; animation:fhFloat 5s ease-in-out infinite; }
+@keyframes fhFloat { 0%,100%{transform:translateY(0) rotate(-10deg)} 50%{transform:translateY(-18px) rotate(10deg)} }
+
+.cf-layer { position:absolute; inset:0; pointer-events:none; overflow:hidden; border-radius:28px; }
+.cp { position:absolute; width:9px; height:9px; border-radius:2px; animation:cfFall 1.3s ease-in forwards; opacity:0; }
+@keyframes cfFall { 0%{transform:translateY(-10px) rotate(0);opacity:1} 100%{transform:translateY(340px) rotate(700deg);opacity:0} }
+</style>
+
+<div id="app">
+  <div class="card" id="mainCard">
+    <div class="fh-layer" id="fhLayer"></div>
+    <div style="position:relative;z-index:1">
+      <div class="progress-dots" id="dots"></div>
+      <div id="mainContent"></div>
+      <div class="cf-layer" id="cfLayer"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const stages = [
+  { imgSrc:'https://media.tenor.com/roigvbEiE9QAAAAj/tkthao219-meomeo.gif', meme:'😺', mood:'normal',   title:'Do you love me? 🐼',                        sub:'Kappa is waiting for your answer...' },
+  { imgSrc:'https://media.tenor.com/wg0hDNV02REAAAAj/bubu-bubu-angry.gif', meme:'😾', mood:'angry',    title:'Please think again! 😠',                     sub:'Acche se socho na 😤' },
+  { imgSrc:'https://i.pinimg.com/originals/4c/42/41/4c42413b2c89fad69dc10e814d627676.gif', meme:'👻😭', mood:'sad',    title:'Ek aur baar Soch lo! 🥺',                    sub:'Kyu aisa kar rahi ho... Plzz Man jao 😭' },
+  { imgSrc:'https://i.pinimg.com/originals/b7/10/f2/b710f21fee78da75eecb22b407658ead.gif', meme:'🐱🤗', mood:'pleading', title:'Baby Man jao na!\nKitna bhav khaogi 🥺',   sub:'Bhut galat baat hai yrrr 😩', runAway:true }
+];
+
+function charHTML(s) {
+  if (s.imgSrc) return `<img style="width:150px;height:150px;object-fit:contain;border-radius:16px;" src="${s.imgSrc}" alt="meme" onerror="this.outerHTML='<div class=&quot;meme-face ${s.mood}&quot;>${s.meme}</div>'">`;
+  return `<div class="meme-face ${s.mood}">${s.meme}</div>`;
+}
+
+function renderDots(active) {
+  const el=document.getElementById('dots'); el.innerHTML='';
+  for(let i=0;i<=stages.length;i++){
+    const d=document.createElement('div');
+    d.className='dot'+(i<active?' done':i===active?' active':'');
+    el.appendChild(d);
+  }
+}
+
+function spawnFH() {
+  const l=document.getElementById('fhLayer'); l.innerHTML='';
+  ['❤️','💕','💗','💖','🌸','💝'].forEach(e=>{
+    const h=document.createElement('div'); h.className='fh'; h.textContent=e;
+    h.style.left=(10+Math.random()*80)+'%'; h.style.top=(5+Math.random()*85)+'%';
+    h.style.animationDelay=(Math.random()*3)+'s'; h.style.animationDuration=(4+Math.random()*4)+'s';
+    l.appendChild(h);
+  });
+}
+
+function spawnConfetti() {
+  const l=document.getElementById('cfLayer'); l.innerHTML='';
+  const cols=['#ff6faa','#ff4d8a','#ffb3cc','#c39ddb','#80deea','#fff176','#a5d6a7'];
+  for(let i=0;i<45;i++){
+    const c=document.createElement('div'); c.className='cp';
+    c.style.left=(Math.random()*100)+'%'; c.style.background=cols[i%cols.length];
+    c.style.animationDelay=(Math.random()*0.8)+'s';
+    c.style.borderRadius=Math.random()>0.5?'50%':'2px';
+    l.appendChild(c);
+  }
+}
+
+let noPos={x:null,y:null};
+
+function moveNoBtn() {
+  const btn=document.getElementById('noBtn'); if(!btn) return;
+  const app=document.getElementById('app'); const ar=app.getBoundingClientRect();
+  const bw=btn.offsetWidth||90, bh=btn.offsetHeight||48, pad=16;
+  let nx,ny,tries=0;
+  do {
+    nx=pad+Math.random()*(ar.width-bw-pad*2);
+    ny=pad+Math.random()*(ar.height-bh-pad*2);
+    tries++;
+  } while(tries<25&&noPos.x!==null&&Math.abs(nx-noPos.x)<100&&Math.abs(ny-noPos.y)<70);
+  noPos={x:nx,y:ny};
+  btn.style.left=(ar.left+nx)+'px';
+  btn.style.top=(ar.top+ny)+'px';
+}
+
+function showYes() {
+  const oldNo=document.getElementById('noBtn');
+  if(oldNo&&oldNo.classList.contains('btn-no-floating')) oldNo.remove();
+  renderDots(stages.length); spawnConfetti(); spawnFH();
+  document.getElementById('dots').style.display='none';
+  document.getElementById('mainContent').innerHTML=`
+    <div style="text-align:center;position:relative;z-index:1">
+      <img src="https://i.pinimg.com/originals/6c/2b/48/6c2b48afe5dc27844b11c812053d2296.gif" style="width:150px;height:150px;object-fit:contain;border-radius:16px;">
+      <div class="yes-title">I knew it! You Love me a lot 🥺</div>
+      <div class="yes-sub">Kappa is sooo happy right now 💕<br>You are my everything! 🌸</div>
+      <span class="hearts-row">❤️ 💕 💗 💖 💝</span>
+    </div>`;
+}
+
+function renderStage(idx) {
+  const oldNo=document.getElementById('noBtn');
+  if(oldNo&&oldNo.classList.contains('btn-no-floating')) oldNo.remove();
+  if(idx>=stages.length){showYes();return;}
+  const s=stages[idx];
+  renderDots(idx); spawnFH();
+
+  document.getElementById('mainContent').innerHTML=`
+    <div class="char-area">${charHTML(s)}</div>
+    <div class="main-text">${s.title.replace('\n','<br>')}</div>
+    <div class="sub-text">${s.sub}</div>
+    <div class="btns" id="btnArea">
+      <button class="btn-yes" id="yesBtn">Yes 💕</button>
+      ${s.runAway?'':'<button class="btn-no" id="noBtn">No</button>'}
+    </div>`;
+
+  document.getElementById('yesBtn').onclick=showYes;
+
+  if(s.runAway){
+    const nb=document.createElement('button');
+    nb.id='noBtn'; nb.className='btn-no-floating'; nb.textContent='No';
+    document.body.appendChild(nb);
+    const ar=document.getElementById('app').getBoundingClientRect();
+    nb.style.left=(ar.left+ar.width/2+30)+'px';
+    nb.style.top=(ar.top+ar.height/2-22)+'px';
+    noPos={x:ar.width/2+30,y:ar.height/2-22};
+    nb.addEventListener('mouseover',moveNoBtn);
+    nb.addEventListener('touchstart',e=>{e.preventDefault();moveNoBtn();},{passive:false});
+    nb.addEventListener('click',moveNoBtn);
+  } else {
+    document.getElementById('noBtn').onclick=()=>renderStage(idx+1);
+  }
+}
+
+renderStage(0);
+</script>
